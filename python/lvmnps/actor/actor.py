@@ -8,6 +8,7 @@
 
 from __future__ import annotations
 
+import os
 import asyncio
 from contextlib import suppress
 
@@ -30,6 +31,12 @@ class lvmnps(AMQPActor):
     parser = nps_command_parser  # commands register..CK 20210402
 
     def __init__(self, *args, **kwargs):
+
+        if "schema" not in kwargs:
+            kwargs["schema"] = os.path.join(
+                os.path.dirname(__file__),
+                "../etc/schema.json",
+            )
         super().__init__(*args, **kwargs)
 
     async def start(self):
